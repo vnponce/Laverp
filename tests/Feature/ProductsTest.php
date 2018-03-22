@@ -54,7 +54,7 @@ class ProductsTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Crear producto');
 
-        $this->post('/products/create', [
+        $response = $this->post('/products', [
             'title' => 'titulo',
             'description' => 'Este es un gran producto.',
             'photo' => '/imagen/algo',
@@ -68,8 +68,8 @@ class ProductsTest extends TestCase
             'days_to_deliver' => '2',
 //            'category_id' => '1',  // habrá categorias
             'unit_of_measure' => 'new',  // pieza, metros, cosas de esas
+            'available_quantity' => 10
         ]);
-
         $this->assertDatabaseHas('products', [
             'title' => 'titulo',
             'description' => 'Este es un gran producto.',
@@ -84,6 +84,43 @@ class ProductsTest extends TestCase
             'days_to_deliver' => '2',
 //            'category_id' => '1',  // habrá categorias
             'unit_of_measure' => 'piece',  // pieza, metros, cosas de esas
+            'available_quantity' => 10
+        ]);
+    }
+
+    /** @test */
+    function user_can_update_product()
+    {
+        $user = create(User::class);
+        $product = create(Product::class, [
+            'title' => 'Mi producto'
+        ]);
+
+        $response = $this->withoutExceptionHandling()->get('/products/' .  $product->id . '/edit');
+        $response->assertStatus(200)
+            ->assertSee('Mi producto');
+
+        $this->put('/products/' . $product->id, [
+            'title' => 'Nuevo titulo'
+        ]);
+
+        $this->assertDatabaseHas('products', [
+            'title' => 'Nuevo titulo'
+        ]);
+    }
+
+    /** @test */
+    function it_can_be_deleted()
+    {
+        $user = create(User::class);
+        $product = create(Product::class, [
+            'title' => 'deleted product'
+        ]);
+
+        $this->delete('/products/' . $product->id);
+
+        $this->assertDatabaseMissing('products', [
+            'title' => 'deleted product'
         ]);
     }
 }

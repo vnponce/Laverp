@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration
 //            $table->integer('supplier_id')->unsigned()->nullable();
 //            $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->integer('days_to_deliver')->unsigned();
+            $table->integer('available_quantity')->unsigned()->default(0);
             $table->enum('unit_of_measure', ['piece'])->default('piece');
 //            $table->integer('unit_of_measure_id')->unsigned();
 //            $table->integer('category_id')->unsigned();
