@@ -15,7 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+//Route::group(['middleware' => 'auth'], function () {
+Route::group([], function () {
     Route::resource('products', 'ProductController');
 });
 Auth::routes();
