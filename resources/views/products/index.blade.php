@@ -30,24 +30,24 @@
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Existencia</th>
-            <th>Inventario</th>
-            <th>Precio</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Stock</th>
+            <th>Set on store</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Existencia</th>
-            <th>Inventario</th>
-            <th>Precio</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Available</th>
+            <th>Set on store</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </tfoot>
         <tbody>
@@ -55,20 +55,20 @@
             <tr>
                 <td>{{ $product->title }}</td>
                 <td>{{ $product->description }}</td>
-                <td>{{ $product->price }}</td>
-                <td>9</td>
+                <td>{{ $product->available_quantity }}</td>
                 <td>
                     <a href="#" class="btn btn-primary">
                         <i class="fa fa-archive"></i>
                     </a>
                 </td>
+                <td>{{ $product->price }}</td>
                 <td>
-                    <a href="#" class="btn btn-primary">
+                    <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-primary">
                         <i class="fa fa-edit"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-danger">
+                    <a href="#" data-product-id="{{ $product->id }}" class="btn btn-danger delete-product">
                         <i class="fa fa-trash"></i>
                     </a>
                 </td>
@@ -80,9 +80,25 @@
 @stop
 
 @section('js')
+    <!--  This must replaced by ajax */ -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
         $(document).ready(function() {
             $('#example').DataTable();
+
+            /* Destroy item ( in future replaced by vue as example )*/
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.delete-product').on('click', function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: '/products/' + $(this).attr('data-product-id'),
+                    type: 'DELETE',
+                });
+            })
         });
     </script>script>
 @stop

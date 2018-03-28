@@ -3,18 +3,18 @@
 @section('title','Create product' )
 
 @section('content_header')
-    <h1>Crear producto</h1>
+    <h1>Editar producto {{ $product->title }}</h1>
 @stop
 
 @section('content')
     {{--<h1>Crear producto.</h1>--}}
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Ingresar datos de producto nuevo</h3>
+            <h3 class="box-title">Editar datos de producto {{ $product->title }}</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        {!! Form::model($product, ['route' => ['products.update', $product->id]])  !!}
+        {!! Form::model($product, ['route' => ['products.update', $product->id], 'method' => 'put'])  !!}
             <div class="box-body">
                 {!! Field::text('title', ['name' => 'title', 'label' => 'Título', 'placeholder' => 'Título de producto'])  !!}
                 {!! Field::text('description', ['name' => 'description','label' => 'Descripción', 'placeholder' => 'Descripción de producto'])  !!}
@@ -25,7 +25,8 @@
                 {!! Field::text('weight', ['name' => 'weight', 'label' => 'Peso', 'placeholder' => 'Peso de producto en gramos'])  !!}
                 {!! Field::text('price', ['name' => 'price', 'label' => 'Precio', 'placeholder' => 'Precio del producto'])  !!}
                 {!! Field::text('cost', ['name' => 'cost', 'label' => 'Costo', 'placeholder' => 'Costo del producto'])  !!}
-                {!! Field::select('condition', ['new' => 'Nuevo', 'prime' => 'Matería Prime', 'both' => 'Ambos'], ['empty' => 'Seleccionar condición del artículo']) !!}
+                {!! Field::select('condition', ['new' => 'Nuevo', 'used' => 'Usado', 'refurbished' => 'Reconstruido'], ['empty' => 'Seleccionar condición del artículo']) !!}
+{{--                {!! Field::select('condition', ['new' => 'Nuevo', 'prime' => 'Matería Prime', 'both' => 'Ambos'], ['empty' => 'Seleccionar condición del artículo']) !!}--}}
                 {!! Field::text('days_to_deliver', ['name' => 'days_to_deliver', 'label' => 'Días de entrega', 'placeholder' => 'Días de entrega por parte del proveedor'])  !!}
                 {{--'category_id',  // habrá categorias--}}
                 {{--                {!! Field::text('Costo', ['name' => 'cost', 'placeholder' => 'Costo del producto'])  !!}--}}

@@ -3,18 +3,20 @@
 use Faker\Generator as Faker;
 
 $factory->define(\App\Product::class, function (Faker $faker) {
+    $price = $faker->numberBetween(1000, 90000);
+    $cost = $price - ($price*0.6);
     return [
-        'title' => 'titulo',
-        'description' => 'Este es un gran producto.',
+        'title' => $faker->name,
+        'description' => $faker->text,
         'photo' => '/imagen/algo',
-        'code' => '12345678',
-        'sku' => '12345678',
-        'volume' => '0',
-        'weight' => '0',
-        'price' => '100',
-        'cost' => '90',
+        'code' => $faker->numberBetween(00000000, 99999999),
+        'sku' => $faker->numberBetween(00000000, 99999999),
+        'volume' => $faker->numberBetween(100, 9000),
+        'weight' => $faker->numberBetween(100, 9000),
+        'price' => $price,
+        'cost' => $cost,
         'condition' => 'new',  // Terminado, matería prima, o ambas
-        'days_to_deliver' => '2',
+        'days_to_deliver' => $faker->numberBetween(0, 10),
 //        'category_id' => '1',  // habrá categorias
         'unit_of_measure' => 'piece',  // pieza, metros, cosas de esas
         'available_quantity' => $faker->numberBetween(0, 100)
