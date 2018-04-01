@@ -14,11 +14,11 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="/stores/create">
+        <form role="form" method="POST" action="/stores">
             {{ csrf_field() }}
             <div class="box-body">
-                {!! Field::text('name', ['name' => 'title', 'label' => 'Name', 'placeholder' => 'Store name'])  !!}
-                {!! Field::text('address', ['name' => 'description','label' => 'Address', 'placeholder' => 'Store address'])  !!}
+                {!! Field::text('name', ['name' => 'name', 'label' => 'Name', 'placeholder' => 'Store name'])  !!}
+                {!! Field::text('address', ['name' => 'address','label' => 'Address', 'placeholder' => 'Store address'])  !!}
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Create</button>

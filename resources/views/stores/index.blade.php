@@ -69,7 +69,7 @@
                     </a>
                 </td>
                 <td>
-                    <a href="#" data-stores-id="{{ $store->id }}" class="btn btn-danger delete-product">
+                    <a href="#" data-store-id="{{ $store->id }}" class="btn btn-danger delete-store">
                         <i class="fa fa-trash"></i>
                     </a>
                 </td>
@@ -95,6 +95,7 @@
             });
             $('.delete-store').on('click', function(e){
                 e.preventDefault();
+                alert('hola');
                 $.ajax({
                     url: '/stores/' + $(this).attr('data-store-id'),
                     type: 'DELETE',
