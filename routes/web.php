@@ -18,6 +18,9 @@ Route::get('/', function () {
 //Route::group(['middleware' => 'auth'], function () {
 Route::group([], function () {
     Route::resource('products', 'ProductController');
+    Route::get('stores/{store}/products/add', 'ProductStoreController@add');
+    Route::get('stores/{store}/products', 'ProductStoreController@index');
+    Route::post('stores/{store}/products', 'ProductStoreController@store');
     Route::resource('stores', 'StoreController');
 });
 Auth::routes();

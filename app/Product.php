@@ -22,4 +22,9 @@ class Product extends Model
         'unit_of_measure_id',  // pieza, metros, cosas de esas
         'available_quantity'
     ];
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class);
+    }
 }

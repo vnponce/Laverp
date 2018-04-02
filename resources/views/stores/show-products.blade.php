@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Stores')
+@section('title', "Products in {$store->name}")
 
 @section('content_header')
-    <h1>Stores</h1>
+    <h1>Products in {{ $store->name }}</h1>
 @stop
 
 @section('content')
@@ -31,9 +31,9 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Address</th>
-            <th>Stock</th>
-            <th>Set products</th>
+            <th>Description</th>
+            <th>Qty.</th>
+            <th>Price</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -41,35 +41,27 @@
         <tfoot>
         <tr>
             <th>Name</th>
-            <th>Address</th>
-            <th>Stock</th>
-            <th>Set products</th>
+            <th>Description</th>
+            <th>Qty.</th>
+            <th>Price</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
         </tfoot>
         <tbody>
-        @foreach($stores as $store)
+        @foreach($store->products as $product)
             <tr>
-                <td>{{ $store->name }}</td>
-                <td>{{ $store->address }}</td>
+                <td>{{ $product->title }}</td>
+                <td>{{ $product->description }}</td>
+                <td>{{ $product->available_quantity }}</td>
+                <td>${{ $product->price }}</td>
                 <td>
-                    <a href="/stores/{{ $store->id }}/products" class="btn btn-primary">
-                        <i class="fa fa-archive"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="/stores/{{ $store->id }}/products/add" class="btn btn-primary">
-                        <i class="fa fa-archive"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ route('stores.edit', ['id' => $store->id]) }}" class="btn btn-primary">
+                    <a href="#" class="btn btn-primary">
                         <i class="fa fa-edit"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="#" data-store-id="{{ $store->id }}" class="btn btn-danger delete-store">
+                    <a href="#" class="btn btn-danger delete-productsssssss">
                         <i class="fa fa-trash"></i>
                     </a>
                 </td>
