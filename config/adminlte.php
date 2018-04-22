@@ -123,7 +123,7 @@ return [
             'submenu' => [
                 [
                     'text'        => 'Agregar',
-                    'url'         => '/products/add',
+                    'url'         => '/products/create',
                 ],
                 [
                     'text'        => 'Lista',

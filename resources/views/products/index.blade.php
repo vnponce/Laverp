@@ -33,7 +33,7 @@
             <th>Imagen</th>
             <th>SKU</th>
             <th>Nombre</th>
-            <th>Ver +</th>
+            <th>Mas información</th>
             @if(auth()->user() && auth()->user()->role == 'admin')
                 <th>Stock</th>
                 <th>Edit</th>

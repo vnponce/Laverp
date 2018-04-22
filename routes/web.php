@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/products');
 });
 
 //Route::group(['middleware' => 'auth'], function () {
