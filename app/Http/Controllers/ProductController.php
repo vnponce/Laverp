@@ -15,15 +15,24 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        if(!auth()->user()->isAdmin()){
+            return redirect('/products');
+        }
         return view('products.show', compact('product'));
     }
     public function create()
     {
+        if(!auth()->user()->isAdmin()){
+            return redirect('/products');
+        }
         return view('products.create');
     }
 
     public function store()
     {
+        if(!auth()->user()->isAdmin()){
+            return redirect('/products');
+        }
         $this->validate(request(),[
             'title' => 'required',
             'description' => 'required',
@@ -45,17 +54,26 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        if(!auth()->user()->isAdmin()){
+            return redirect('/products');
+        }
         return view('products.edit', compact('product'));
     }
 
     public function update(Product $product)
     {
+        if(!auth()->user()->isAdmin()){
+            return redirect('/products');
+        }
         $product->update(request()->all());
         return redirect('products');
     }
 
     public function destroy(Product $product)
     {
+        if(!auth()->user()->isAdmin()){
+            return redirect('/products');
+        }
         $product->delete();
         return redirect('products');
     }

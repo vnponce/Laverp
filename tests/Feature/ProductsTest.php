@@ -90,12 +90,12 @@ class ProductsTest extends TestCase
     /** @test */
     function user_can_update_product()
     {
-        $user = create(User::class);
+        $admin = createAdmin();
         $product = create(Product::class, [
             'title' => 'Mi producto'
         ]);
 
-        $response = $this->withoutExceptionHandling()->get('/products/' .  $product->id . '/edit');
+        $response = $this->actingAs($admin)->withoutExceptionHandling()->get('/products/' .  $product->id . '/edit');
         $response->assertStatus(200)
             ->assertSee('Mi producto');
 
@@ -111,12 +111,13 @@ class ProductsTest extends TestCase
     /** @test */
     function it_can_be_deleted()
     {
-        $user = create(User::class);
+        $admin = createAdmin();
         $product = create(Product::class, [
             'title' => 'deleted product'
         ]);
 
-        $this->delete('/products/' . $product->id);
+        $this->actingAs($admin)
+            ->delete('/products/' . $product->id);
 
         $this->assertDatabaseMissing('products', [
             'title' => 'deleted product'

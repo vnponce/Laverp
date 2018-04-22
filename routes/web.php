@@ -14,10 +14,9 @@
 Route::get('/', function () {
     return redirect('/products');
 });
-
-//Route::group(['middleware' => 'auth'], function () {
-Route::group([], function () {
-    Route::resource('products', 'ProductController');
+Route::get('/products', 'ProductController@index');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('products', 'ProductController', ['except' => ['index']]);
     Route::get('stores/{store}/products/add', 'ProductStoreController@add');
     Route::get('stores/{store}/products', 'ProductStoreController@index');
     Route::post('stores/{store}/products', 'ProductStoreController@store');

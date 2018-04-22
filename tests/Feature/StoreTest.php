@@ -25,7 +25,7 @@ class StoreTest extends TestCase
 
         $this->actingAs($seller);
         // When
-        $response = $this->get('/stores');
+        $response = $this->actingAs($seller)->get('/stores');
         // Then
         $response->assertStatus(200);
         $response->assertSee($store1->name);
@@ -78,13 +78,14 @@ class StoreTest extends TestCase
     /** @test */
     function user_can_update_store()
     {
-        $user = createAdmin();
+        $admin = createAdmin();
         $store = create(Store::class, [
             'name' => 'Confeti',
             'address' => 'Plaza Mocambo'
         ]);
 
-        $response = $this->withoutExceptionHandling()->get('/stores/' .  $store->id . '/edit');
+        $response = $this->actingAs($admin)
+            ->withoutExceptionHandling()->get('/stores/' .  $store->id . '/edit');
         $response->assertStatus(200)
             ->assertSee('Confeti');
 
