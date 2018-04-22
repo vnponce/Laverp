@@ -57,7 +57,6 @@ class ProductsTest extends TestCase
         $response = $this->post('/products', [
             'title' => 'titulo',
             'description' => 'Este es un gran producto.',
-            'photo' => '/imagen/algo',
             'code' => '12345678',
             'sku' => '12345678',
             'volume' => '0',
@@ -73,7 +72,7 @@ class ProductsTest extends TestCase
         $this->assertDatabaseHas('products', [
             'title' => 'titulo',
             'description' => 'Este es un gran producto.',
-            'photo' => '/imagen/algo',
+//            'photo' => '/imagen/algo',
             'code' => '12345678',
             'sku' => '12345678',
             'volume' => '0',

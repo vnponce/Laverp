@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->integer('volume')->nullable();
             $table->integer('weight')->nullable();
 //            $table->mediumText('short_description')->nullable();
-            $table->string('photo')->nullable();
+            $table->string('image')->nullable();
 //            $table->mediumText('ean13')->nullable();
             $table->boolean('active')->default(true);
             $table->enum('condition', ['new', 'used', 'refurbished'])->default('new');
