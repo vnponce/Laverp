@@ -143,8 +143,6 @@
                 var button = $(event.relatedTarget) // Button that triggered the modal
                 var product = button.data('product') // Extract info from data-* attributes
                 var stores = button.data('stores') // Extract info from data-* attributes
-                console.table(product);
-                console.table(stores);
                 // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
@@ -156,7 +154,6 @@
                 modal.find('.product-image').attr('src', product.image)
                 modal.find('.product-stores').html('')
                 stores.forEach(function(store){
-                    console.table(store)
                     modal.find('.product-stores').append('<h3>' + store.name + ': ' +store.pivot.quantity +  '</h3>')
                 })
             })
