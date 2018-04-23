@@ -55,4 +55,25 @@ class ProductStoreTest extends TestCase
             ->assertSee('papas')
             ->assertSee('sabritas');
     }
+
+    /** @test */
+    function it_validate_if_there_are_available_products_to_store_on_specific_shop()
+    {
+        $store = create(Store::class, [
+            'name' => 'Confeti'
+        ]);
+        $product = create(Product::class,[
+            'title' => 'papas',
+            'available_quantity' => 1
+        ]);
+
+        $response = $this->actingAs(createAdmin())
+            ->post("stores/{$store->id}/products", [
+                'product_id' => $product->id,
+                'quantity' => 2,
+                'price' => $product->price
+            ]);
+        $errors = session('errors');
+        $this->assertTrue($errors->has('quantity'));
+    }
 }

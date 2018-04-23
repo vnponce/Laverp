@@ -21,6 +21,14 @@ class ProductStoreController extends Controller
 
     public function store(Store $store)
     {
+        $product = Product::find(request('product_id'));
+        if($product->available_quantity < request('quantity')){
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'quantity' => 'La cantidad disponible no es la suficiente.'
+                ]);
+        }
         $store->products()->attach(request()->get('product_id'),[
             'quantity' => request()->get('quantity'),
             'price' => request()->get('price'),
