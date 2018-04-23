@@ -22,4 +22,21 @@ abstract class TestCase extends BaseTestCase
         }
     }
 
+
+    /**
+     * @param $store
+     * @param $product
+     * @param int $quantity
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
+    function addProductToStore($store, $product, $quantity = 1): \Illuminate\Foundation\Testing\TestResponse
+    {
+        $response = $this->actingAs(createAdmin())
+            ->withoutExceptionHandling()->post("stores/{$store->id}/products", [
+                'product_id' => $product->id,
+                'quantity' => $quantity,
+                'price' => $product->price
+            ]);
+        return $response;
+    }
 }

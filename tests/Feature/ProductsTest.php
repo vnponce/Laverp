@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Product;
+use App\Store;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -95,7 +96,9 @@ class ProductsTest extends TestCase
             'title' => 'Mi producto'
         ]);
 
-        $response = $this->actingAs($admin)->withoutExceptionHandling()->get('/products/' .  $product->id . '/edit');
+        $response = $this->actingAs($admin)
+            ->withoutExceptionHandling()
+            ->get('/products/' .  $product->id . '/edit');
         $response->assertStatus(200)
             ->assertSee('Mi producto');
 
@@ -122,5 +125,18 @@ class ProductsTest extends TestCase
         $this->assertDatabaseMissing('products', [
             'title' => 'deleted product'
         ]);
+    }
+
+    /** @test */
+    function it_return_total_existing_product()
+    {
+        $admin = createAdmin();
+        $product = create(Product::class, [
+            'available_quantity' => 9
+        ]);
+        $store = create(Store::class);
+        $this->addProductToStore($store, $product, 4);
+
+        $this->assertEquals(9, $product->total_available);
     }
 }

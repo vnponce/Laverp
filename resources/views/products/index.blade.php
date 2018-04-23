@@ -35,7 +35,7 @@
             <th>Nombre</th>
             <th>Mas información</th>
             @if(auth()->user() && auth()->user()->role == 'admin')
-                <th>Stock</th>
+                {{--<th>Stock</th>--}}
                 <th>Edit</th>
                 <th>Delete</th>
             @endif
@@ -61,12 +61,13 @@
                 <td>{{ $product->sku }}</td>
                 <td>{{ $product->title }}</td>
                 <td>
-                    <a href="#" class="btn btn-primary"
+                    <a href="#" class="btn btn-link"
                        data-toggle="modal" data-target="#exampleModal"
                        data-product="{{ $product }}"
                        data-stores="{{ $product->stores }}"
                     >
-                        <i class="fa fa-plus"></i>
+                        Existencia: <span class="label label-default">{{ $product->total_available }}</span>
+                        {{--<i class="fa fa-plus"></i>--}}
                     </a>
                 </td>
                 @if(auth()->user() && auth()->user()->role == 'admin')
@@ -143,6 +144,7 @@
                 var button = $(event.relatedTarget) // Button that triggered the modal
                 var product = button.data('product') // Extract info from data-* attributes
                 var stores = button.data('stores') // Extract info from data-* attributes
+                console.table(product);
                 // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)

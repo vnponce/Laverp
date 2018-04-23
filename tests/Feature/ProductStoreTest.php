@@ -55,20 +55,4 @@ class ProductStoreTest extends TestCase
             ->assertSee('papas')
             ->assertSee('sabritas');
     }
-
-    /**
-     * @param $store
-     * @param $product
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    public function addProductToStore($store, $product): \Illuminate\Foundation\Testing\TestResponse
-    {
-        $response = $this->actingAs(createAdmin())
-            ->withoutExceptionHandling()->post("stores/{$store->id}/products", [
-                'product_id' => $product->id,
-                'quantity' => 1,
-                'price' => $product->price
-            ]);
-        return $response;
-    }
 }

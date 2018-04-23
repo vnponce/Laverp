@@ -23,9 +23,16 @@ class Product extends Model
         'available_quantity'
     ];
 
+    protected $appends = ['total_available'];
+
     public function stores()
     {
         return $this->belongsToMany(Store::class)
             ->withPivot('quantity');
+    }
+
+    public function getTotalAvailableAttribute()
+    {
+        return $this->available_quantity + $this->stores->sum('stock');
     }
 }
