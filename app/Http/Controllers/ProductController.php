@@ -36,7 +36,6 @@ class ProductController extends Controller
         $this->validate(request(),[
             'title' => 'required',
             'description' => 'required',
-//            'image' => 'required',
             'code' => 'required',
             'sku' => 'required',
             'volume' => 'required',
@@ -48,7 +47,12 @@ class ProductController extends Controller
 //            'category_id' => 'required',  // habrá categorias
             'unit_of_measure' => 'required',  // pieza, metros, cosas de esas
         ]);
+        $algo = request('image')->store('products', 'local');
+
         $product = Product::create(request()->all());
+        $product->image = $algo;
+        $product->save();
+
         return redirect('products');
     }
 

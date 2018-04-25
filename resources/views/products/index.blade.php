@@ -57,7 +57,7 @@
         <tbody>
         @foreach($products as $product)
             <tr>
-                <td><img src="{{ $product->image }}" class="img-responsive" alt=""></td>
+                <td><img style="max-height: 200px;" src="{{ asset($product->image) }}" class="img-responsive" alt=""></td>
                 <td>{{ $product->sku }}</td>
                 <td>{{ $product->title }}</td>
                 <td>
@@ -104,7 +104,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <img src="#" class="img-responsive product-image" alt=""/>
+                            <img style="max-height: 200px;" src="#" class="img-responsive product-image" alt=""/>
                             <h4>Product: <span class="product-title"></span></h4>
                             <hr>
                             <h4>Sku: <span class="product-sku"></span></h4>

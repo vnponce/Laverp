@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Product;
 use App\Store;
 use App\User;
+use Illuminate\Http\Testing\File;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -138,5 +140,36 @@ class ProductsTest extends TestCase
         $this->addProductToStore($store, $product, 4);
 
         $this->assertEquals(9, $product->total_available);
+    }
+
+    /** @test */
+    function image_is_uploaded_if_included()
+    {
+        Storage::fake('local');
+        $response = $this->actingAs(createAdmin())
+            ->post('/products', $this->validParams([
+            'image' => File::image('concert-poster.png'),
+        ]));
+        $this->assertNotNull(Product::first()->image);
+        Storage::disk('local')->assertExists(Product::first()->image);
+    }
+
+    private function validParams($overrides = [])
+    {
+        return array_merge([
+            'title' => 'titulo',
+            'description' => 'Este es un gran producto.',
+            'code' => '12345678',
+            'sku' => '12345678',
+            'volume' => '0',
+            'weight' => '0',
+            'price' => '100',
+            'cost' => '90',
+            'condition' => 'new',  // Terminado, matería prima, o ambas
+            'days_to_deliver' => '2',
+//            'category_id' => '1',  // habrá categorias
+            'unit_of_measure' => 'new',  // pieza, metros, cosas de esas
+            'available_quantity' => 10
+        ], $overrides);
     }
 }

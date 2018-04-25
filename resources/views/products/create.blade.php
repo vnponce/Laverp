@@ -14,12 +14,12 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="/products">
+        <form role="form" method="POST" action="/products" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="box-body">
                 {!! Field::text('title', ['name' => 'title', 'label' => 'Título', 'placeholder' => 'Título de producto'])  !!}
                 {!! Field::text('description', ['name' => 'description','label' => 'Descripción', 'placeholder' => 'Descripción de producto'])  !!}
-                {!! Field::file('photo', ['name' => 'photo', 'label' => 'Imagen'])  !!}
+                {!! Field::file('image', ['name' => 'image', 'label' => 'Imagen'])  !!}
                 {!! Field::text('code', ['name' => 'code', 'label' => 'Código', 'placeholder' => 'Código de producto'])  !!}
                 {!! Field::text('sku', ['name' => 'sku', 'label' => 'SKU', 'placeholder' => 'SKU de producto'])  !!}
                 {!! Field::text('volume', ['name' => 'volume', 'label' => 'Volumen', 'placeholder' => 'Volume de producto en cm'])  !!}
