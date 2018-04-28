@@ -8,7 +8,7 @@ $factory->define(\App\Product::class, function (Faker $faker) {
     return [
         'title' => $faker->name,
         'description' => $faker->text,
-        'image' => $faker->imageUrl('300', '200', 'technics'),
+//        'image' => $faker->imageUrl('300', '200', 'technics'),
         'code' => $faker->numberBetween(00000000, 99999999),
         'sku' => $faker->numberBetween(00000000, 99999999),
         'volume' => $faker->numberBetween(100, 9000),

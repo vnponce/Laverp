@@ -36,6 +36,7 @@ class ProductController extends Controller
         $this->validate(request(),[
             'title' => 'required',
             'description' => 'required',
+            'image' => ['nullable', 'image'],
             'code' => 'required',
             'sku' => 'required',
             'volume' => 'required',
@@ -47,7 +48,7 @@ class ProductController extends Controller
 //            'category_id' => 'required',  // habrá categorias
             'unit_of_measure' => 'required',  // pieza, metros, cosas de esas
         ]);
-        $algo = request('image')->store('products', 'local');
+        $algo = request()->hasFile('image') ? request('image')->store('products', 'local') : null;
 
         $product = Product::create(request()->all());
         $product->image = $algo;

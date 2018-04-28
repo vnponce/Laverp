@@ -53,7 +53,7 @@
             <tr>
                 <td>{{ $product->title }}</td>
                 <td>{{ $product->description }}</td>
-                <td>{{ $product->available_quantity }}</td>
+                <td>{{ $product->pivot->quantity }}</td>
                 <td>${{ $product->price }}</td>
                 <td>
                     <a href="#" class="btn btn-primary">

@@ -57,7 +57,7 @@ class ProductsTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Crear producto');
 
-        $response = $this->post('/products', [
+        $response = $this->withoutExceptionHandling()->post('/products', [
             'title' => 'titulo',
             'description' => 'Este es un gran producto.',
             'code' => '12345678',
@@ -152,6 +152,19 @@ class ProductsTest extends TestCase
         ]));
         $this->assertNotNull(Product::first()->image);
         Storage::disk('local')->assertExists(Product::first()->image);
+    }
+
+    /** @test */
+    function image_is_uploaded_is_optional()
+    {
+        $response = $this->actingAs(createAdmin())
+            ->post('/products', $this->validParams([
+            'image' => null,
+        ]));
+        tap(Product::first(), function ($product) use ($response) {
+            $response->assertRedirect('/products');
+            $this->assertNull($product->image);
+        });
     }
 
     private function validParams($overrides = [])
