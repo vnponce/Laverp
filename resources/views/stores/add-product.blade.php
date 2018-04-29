@@ -19,7 +19,7 @@
             <div class="box-body">
                 {!! Field::select('product_id', $products->pluck('title', 'id')->toArray(), ['empty' => 'Select product']) !!}
                 {!! Field::text('quantity', ['name' => 'quantity', 'label' => 'Qty.', 'placeholder' => 'Quantity'])  !!}
-                {!! Field::text('price', ['name' => 'price','label' => 'Price', 'placeholder' => 'Price'])  !!}
+                {!! Field::hidden('price', '0', ['name' => 'price','label' => 'Price', 'placeholder' => 'Price'])  !!}
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Create</button>

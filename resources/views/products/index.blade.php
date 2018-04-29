@@ -1,5 +1,8 @@
 @extends('adminlte::page')
 
+{{--@section('adminlte_css')--}}
+{{--<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">--}}
+{{--@stop--}}
 @section('title', 'Inventario')
 
 @section('content_header')
@@ -36,8 +39,7 @@
             <th>Mas información</th>
             @if(auth()->user() && auth()->user()->role == 'admin')
                 {{--<th>Stock</th>--}}
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Acciones</th>
             @endif
         </tr>
         </thead>
@@ -46,11 +48,10 @@
             <th>Imagen</th>
             <th>SKU</th>
             <th>Nombre</th>
-            <th>Ver +</th>
+            <th>Mas información</th>
             @if(auth()->user() && auth()->user()->role == 'admin')
                 {{--<th>Stock</th>--}}
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Acciones</th>
             @endif
         </tr>
         </tfoot>
@@ -66,6 +67,7 @@
                        data-product="{{ $product }}"
                        data-stores="{{ $product->stores }}"
                     >
+                        <i class="fa fa-plus-square-o fa-lg"></i>
                         Existencia: <span class="label label-default">{{ $product->total_available }}</span>
                         {{--<i class="fa fa-plus"></i>--}}
                     </a>
@@ -77,14 +79,13 @@
                         {{--</a>--}}
                     {{--</td>--}}
                     <td>
-                        <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-primary">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#" data-product-id="{{ $product->id }}" class="btn btn-danger delete-product">
-                            <i class="fa fa-trash"></i>
-                        </a>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-link fa fa-edit fa-2x" style="text-decoration: none">
+                            </a>
+                            <a href="#" data-product-id="{{ $product->id }}" class="btn btn-link delete-store fa fa-trash fa-2x" style="text-decoration: none; color: tomato">
+                            </a>
+                        </div>
+
                     </td>
                 @endif
             </tr>
@@ -133,11 +134,18 @@
 @stop
 
 @section('js')
+    <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    {{--<link href="maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">--}}
+    {{--<link href="cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">--}}
     <!--  This must replaced by ajax */ -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
         $(document).ready(function() {
-            $('#example').DataTable();
+            $('#example').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json'
+                }
+            });
 
             /* Modal */
             $('#exampleModal').on('show.bs.modal', function (event) {

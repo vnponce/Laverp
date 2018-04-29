@@ -30,41 +30,44 @@
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <th>Imagen</th>
+            <th>SKU</th>
+            <th>Nombre</th>
             <th>Qty.</th>
             <th>Price</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            {{--<th>Edit</th>--}}
+            {{--<th>Delete</th>--}}
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <th>Imagen</th>
+            <th>SKU</th>
+            <th>Nombre</th>
             <th>Qty.</th>
             <th>Price</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            {{--<th>Edit</th>--}}
+            {{--<th>Delete</th>--}}
         </tr>
         </tfoot>
         <tbody>
         @foreach($store->products as $product)
             <tr>
+                <td><img style="max-height: 200px;" src="{{ asset($product->image) }}" class="img-responsive" alt=""></td>
+                <td>{{ $product->sku }}</td>
                 <td>{{ $product->title }}</td>
-                <td>{{ $product->description }}</td>
                 <td>{{ $product->pivot->quantity }}</td>
                 <td>${{ $product->price }}</td>
-                <td>
-                    <a href="#" class="btn btn-primary">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="#" class="btn btn-danger delete-productsssssss">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
+                {{--<td>--}}
+                    {{--<a href="#" class="btn btn-primary">--}}
+                        {{--<i class="fa fa-edit"></i>--}}
+                    {{--</a>--}}
+                {{--</td>--}}
+                {{--<td>--}}
+                    {{--<a href="#" class="btn btn-danger delete-productsssssss">--}}
+                        {{--<i class="fa fa-trash"></i>--}}
+                    {{--</a>--}}
+                {{--</td>--}}
             </tr>
         @endforeach
         </tbody>

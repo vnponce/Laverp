@@ -117,17 +117,17 @@ return [
         [
             'text'        => 'Productos',
             'url'         => '/products',
-            'icon'        => 'archive',
+            'icon'        => 'barcode',
 //            'label'       => 4,
             'label_color' => 'success',
             'submenu' => [
                 [
-                    'text'        => 'Agregar',
-                    'url'         => '/products/create',
-                ],
-                [
                     'text'        => 'Lista',
                     'url'         => '/products',
+                ],
+                [
+                    'text'        => 'Agregar',
+                    'url'         => '/products/create',
                 ],
                 [
                     'text'        => 'Solicitados',
@@ -146,10 +146,10 @@ return [
                     'text'        => 'Listar',
                     'url'         => '/stores',
                 ],
-                [
-                    'text'        => 'Agregar productos',
-                    'url'         => '/stores/add/product',
-                ],
+//                [
+//                    'text'        => 'Agregar productos',
+//                    'url'         => '/stores/add/product',
+//                ],
             ]
         ],
 //        [
