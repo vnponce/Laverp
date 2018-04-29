@@ -59,7 +59,7 @@
         <tbody>
         @foreach($products as $product)
             <tr>
-                <td><img style="max-height: 200px;" src="{{ asset($product->image) }}" class="img-responsive" alt=""></td>
+                <td><img style="max-height: 200px;" src="{{ asset('storage/'.$product->image) }}" class="img-responsive" alt=""></td>
                 <td>{{ $product->sku }}</td>
                 <td>{{ $product->title }}</td>
                 <td>
