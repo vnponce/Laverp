@@ -48,7 +48,7 @@ class ProductController extends Controller
 //            'category_id' => 'required',  // habrá categorias
             'unit_of_measure' => 'required',  // pieza, metros, cosas de esas
         ]);
-        $algo = request()->hasFile('image') ? request('image')->store('products', 'local') : null;
+        $algo = request()->hasFile('image') ? request('image')->store('products', 'public') : null;
 
         $product = Product::create(request()->all());
         $product->image = $algo;

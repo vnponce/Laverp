@@ -32,15 +32,15 @@ class StoreTest extends TestCase
         $response->assertSee($store2->name);
     }
 
-    /** @test */
-    function it_can_show_a_specific_stores()
-    {
-        $this->actingAs(createAdmin());
-        $stores = create(Store::class);
-
-        $response = $this->get('/stores/'.$stores->id);
-        $response->assertSee($stores->name);
-    }
+//    /** @test */
+//    function it_can_show_a_specific_stores()
+//    {
+//        $this->actingAs(createAdmin());
+//        $stores = create(Store::class);
+//
+//        $response = $this->get('/stores/'.$stores->id);
+//        $response->assertSee($stores->name);
+//    }
 
     /** @test */
     function admin_can_create_store()

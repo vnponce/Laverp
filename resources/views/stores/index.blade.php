@@ -68,6 +68,7 @@
 
 @section('js')
     <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!--  This must replaced by ajax */ -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
@@ -86,10 +87,25 @@
             });
             $('.delete-store').on('click', function(e){
                 e.preventDefault();
-                alert('hola');
-                $.ajax({
-                    url: '/stores/' + $(this).attr('data-store-id'),
-                    type: 'DELETE',
+                swal({
+                    title: '¿Estas seguro de querer eliminar el elemento?',
+                    text: 'De no estarlo se puede cancelar',
+                    icon: "warning",
+                    buttons: ['Cancelar', 'Eliminar item'],
+                    dangerMode: true,
+                }).then((result)=> {
+                    console.log(result);
+                    if(result){
+                        $.ajax({
+                            url: '/stores/' + $(this).attr('data-store-id'),
+                            type: 'DELETE',
+                        });
+                        swal("Elmento eliminado", {
+                            icon: "success",
+                        }).then((result) => {
+                            location.reload();
+                        });
+                    }
                 });
             })
         });

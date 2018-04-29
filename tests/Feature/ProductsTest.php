@@ -64,7 +64,7 @@ class ProductsTest extends TestCase
             'sku' => '12345678',
             'volume' => '0',
             'weight' => '0',
-            'price' => '100',
+            'price' => '100.00',
             'cost' => '90',
             'condition' => 'new',  // Terminado, matería prima, o ambas
             'days_to_deliver' => '2',
@@ -80,7 +80,7 @@ class ProductsTest extends TestCase
             'sku' => '12345678',
             'volume' => '0',
             'weight' => '0',
-            'price' => '100',
+            'price' => '10000',
             'cost' => '90',
             'condition' => 'new',  // Terminado, matería prima, o ambas
             'days_to_deliver' => '2',
@@ -151,7 +151,7 @@ class ProductsTest extends TestCase
             'image' => File::image('concert-poster.png'),
         ]));
         $this->assertNotNull(Product::first()->image);
-        Storage::disk('local')->assertExists(Product::first()->image);
+        Storage::disk('public')->assertExists(Product::first()->image);
     }
 
     /** @test */

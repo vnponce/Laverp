@@ -23,7 +23,7 @@ class Product extends Model
         'available_quantity'
     ];
 
-    protected $appends = ['total_available'];
+    protected $appends = ['total_available', 'format_price'];
 
     public function stores()
     {
@@ -35,4 +35,15 @@ class Product extends Model
     {
         return $this->available_quantity + $this->stores->sum('stock');
     }
+
+    public function getFormatPriceAttribute()
+    {
+        return toFormat($this->attributes['price'] );
+    }
+
+    public function setPriceAttribute($price)
+    {
+        $this->attributes['price'] = toCents($price);
+    }
+
 }

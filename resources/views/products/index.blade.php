@@ -82,7 +82,7 @@
                         <div class="btn-group" role="group" aria-label="...">
                             <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-link fa fa-edit fa-2x" style="text-decoration: none">
                             </a>
-                            <a href="#" data-product-id="{{ $product->id }}" class="btn btn-link delete-store fa fa-trash fa-2x" style="text-decoration: none; color: tomato">
+                            <a href="#" data-product-id="{{ $product->id }}" class="btn btn-link delete-product fa fa-trash fa-2x" style="text-decoration: none; color: tomato">
                             </a>
                         </div>
 
@@ -106,7 +106,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <img style="max-height: 200px;" src="#" class="img-responsive product-image" alt=""/>
-                            <h4>Product: <span class="product-title"></span></h4>
+                            <h4>Producto: <span class="product-title"></span></h4>
                             <hr>
                             <h4>Sku: <span class="product-sku"></span></h4>
                             <hr>
@@ -135,6 +135,7 @@
 
 @section('js')
     <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{--<link href="maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">--}}
     {{--<link href="cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">--}}
     <!--  This must replaced by ajax */ -->
@@ -157,10 +158,10 @@
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 modal.find('.modal-title').text('Product: ' + product.title)
-                modal.find('.product-title').text('Product: ' + product.title)
-                modal.find('.product-sku').text('Product: ' + product.sku)
+                modal.find('.product-title').text(product.title)
+                modal.find('.product-sku').text(product.sku)
                 modal.find('.product-description').text(product.description)
-                modal.find('.product-price').text(product.price)
+                modal.find('.product-price').text('$ '+product.format_price)
                 modal.find('.product-image').attr('src', product.image)
                 modal.find('.product-stores').html('')
                 stores.forEach(function(store){
@@ -176,9 +177,30 @@
             });
             $('.delete-product').on('click', function(e){
                 e.preventDefault();
-                $.ajax({
-                    url: '/products/' + $(this).attr('data-product-id'),
-                    type: 'DELETE',
+                swal({
+                    title: '¿Estas seguro de querer eliminar el elemento?',
+                    text: 'De no estarlo se puede cancelar',
+                    icon: "warning",
+                    buttons: ['Cancelar', 'Eliminar item'],
+                    dangerMode: true,
+                    // showCancelButton: true,
+                    // confirmButtonColor: '#dd00dd',
+                    // cancelButtonColor: '#3dd',
+                    // cancelButtonText: 'Cancelar',
+                    // confirmButtonText: 'Eliminar item'
+                }).then((result)=> {
+                    console.log(result);
+                    if(result){
+                        $.ajax({
+                            url: '/products/' + $(this).attr('data-product-id'),
+                            type: 'DELETE',
+                        });
+                        swal("Elmento eliminado", {
+                            icon: "success",
+                        }).then((result) => {
+                            location.reload();
+                        });
+                    }
                 });
             })
         });

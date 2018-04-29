@@ -52,4 +52,24 @@ class ProductTest extends TestCase
             $this->assertEquals(1, $store->pivot->quantity);
         });
     }
+
+    /** @test */
+    public function it_saves_labor_cost_in_cents_using_dots()
+    {
+        create(Product::class, [ 'price' => '12345.12']);
+
+        $this->assertDatabaseHas('products', [
+            'price' => '1234512',
+        ]);
+    }
+
+    /** @test */
+    public function it_returns_labor_cost_in_format_number()
+    {
+        $product = create(Product::class, [
+            'price' => 12345.00
+        ]);
+
+        $this->assertEquals('12,345.00', $product->format_price);
+    }
 }
