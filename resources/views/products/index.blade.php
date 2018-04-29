@@ -163,7 +163,7 @@
                 modal.find('.product-sku').text(product.sku)
                 modal.find('.product-description').text(product.description)
                 modal.find('.product-price').text('$ '+product.format_price)
-                modal.find('.product-image').attr('src', product.image)
+                modal.find('.product-image').attr('src', 'storage/'+product.image)
                 modal.find('.product-stores').html('')
                 stores.forEach(function(store){
                     modal.find('.product-stores').append('<h3>' + store.name + ': ' +store.pivot.quantity +  '</h3>')
