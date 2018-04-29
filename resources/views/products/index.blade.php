@@ -37,7 +37,8 @@
             <th>SKU</th>
             <th>Nombre</th>
             <th>Mas información</th>
-            @if(auth()->user() && auth()->user()->role == 'admin')
+            @if(auth()->user() &&  auth()->user()->isAdmin())
+{{--            @if(auth()->user() && auth()->user()->role == 'admin')--}}
                 {{--<th>Stock</th>--}}
                 <th>Acciones</th>
             @endif

@@ -65,7 +65,7 @@ class UserTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    /** @test */
+//    /** @test */
     function seller_users_can_only_see_products_list_route()
     {
         $seller = create(User::class, [
