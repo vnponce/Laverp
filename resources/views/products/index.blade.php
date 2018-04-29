@@ -50,7 +50,7 @@
             <th>SKU</th>
             <th>Nombre</th>
             <th>Mas información</th>
-            @if(auth()->user() && auth()->user()->role == 'admin')
+            @if(auth()->user() && auth()->user()->isAdmin())
                 {{--<th>Stock</th>--}}
                 <th>Acciones</th>
             @endif
@@ -73,7 +73,7 @@
                         {{--<i class="fa fa-plus"></i>--}}
                     </a>
                 </td>
-                @if(auth()->user() && auth()->user()->role == 'admin')
+                @if(auth()->user() && auth()->user()->isAdmin())
                     {{--<td>--}}
                         {{--<a href="#" class="btn btn-primary">--}}
                             {{--<i class="fa fa-archive"></i>--}}
