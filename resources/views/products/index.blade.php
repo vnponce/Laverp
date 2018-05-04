@@ -36,6 +36,7 @@
             <th>Imagen</th>
             <th>SKU</th>
             <th>Nombre</th>
+            <th>Descripción</th>
             <th>Mas información</th>
             @if(auth()->user() &&  auth()->user()->isAdmin())
 {{--            @if(auth()->user() && auth()->user()->role == 'admin')--}}
@@ -49,6 +50,7 @@
             <th>Imagen</th>
             <th>SKU</th>
             <th>Nombre</th>
+            <th>Descripción</th>
             <th>Mas información</th>
             @if(auth()->user() && auth()->user()->isAdmin())
                 {{--<th>Stock</th>--}}
@@ -62,6 +64,7 @@
                 <td><img style="max-height: 200px;" src="{{ asset('storage/'.$product->image) }}" class="img-responsive" alt=""></td>
                 <td>{{ $product->sku }}</td>
                 <td>{{ $product->title }}</td>
+                <td>{{ $product->description }}</td>
                 <td>
                     <a href="#" class="btn btn-link"
                        data-toggle="modal" data-target="#exampleModal"
