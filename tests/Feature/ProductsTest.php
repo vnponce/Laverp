@@ -14,6 +14,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ProductsTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected $admin;
+    protected $product;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->admin = createAdmin();
+    }
+
     /** @test */
     function a_user_can_browse_products()
     {
@@ -39,7 +49,7 @@ class ProductsTest extends TestCase
     function it_can_show_a_specific_product()
     {
         $this->actingAs(createAdmin());
-        $product = create(Product::class);
+        $product = create(Product::class, $this->validParams());
 
         $response = $this->get('/products/'.$product->id);
         $response->assertSee($product->title);
@@ -91,6 +101,46 @@ class ProductsTest extends TestCase
     }
 
     /** @test */
+    function it_can_validate_required_data_when_product_is_created()
+    {
+        $response = $this->actingAs($this->admin)
+            ->from('/products/create')
+            ->post('/products', [
+                'title' => '',
+                'description' => '',
+//            'photo' => '/imagen/algo',
+                'code' => '',
+                'sku' => '',
+                'volume' => '',
+                'weight' => '',
+                'price' => '',
+                'cost' => '',
+                'condition' => '',  // Terminado, matería prima, o ambas
+                'days_to_deliver' => '',
+//            'category_id' => '1',  // habrá categorias
+                'unit_of_measure' => '',  // pieza, metros, cosas de esas
+                'available_quantity' => ''
+            ]);
+        $response->assertStatus(302)
+            ->assertRedirect('/products/create')
+            ->assertSessionHasErrors([
+                'title',
+                'description',
+                'code',
+                'sku',
+                'volume',
+                'weight',
+                'price',
+                'cost',
+                'condition',  // Terminado, matería prima, o ambas
+                'days_to_deliver',
+//            'category_id' => 'required',  // habrá categorias
+                'unit_of_measure',  // pieza, metros, cosas de esas
+            ]);
+        $this->assertEquals(0, Product::all()->count());
+    }
+
+    /** @test */
     function user_can_update_product()
     {
         $admin = createAdmin();
@@ -104,13 +154,52 @@ class ProductsTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Mi producto');
 
-        $this->put('/products/' . $product->id, [
-            'title' => 'Nuevo titulo'
-        ]);
+        $this->put('/products/' . $product->id, $this->validParams(['title' => 'Nuevo titulo']));
 
         $this->assertDatabaseHas('products', [
             'title' => 'Nuevo titulo'
         ]);
+    }
+
+    /** @test */
+    function it_validate_data_when_product_is_updated()
+    {
+        $product = create(Product::class, $this->validParams());
+        $response = $this->actingAs($this->admin)
+            ->from("/products/{$product->id}/edit/")
+            ->put("/products/{$product->id}", [
+                'title' => '',
+                'description' => '',
+//            'photo' => '/imagen/algo',
+                'code' => '',
+                'sku' => '',
+                'volume' => '',
+                'weight' => '',
+                'price' => '',
+                'cost' => '',
+                'condition' => '',  // Terminado, matería prima, o ambas
+                'days_to_deliver' => '',
+//            'category_id' => '1',  // habrá categorias
+                'unit_of_measure' => '',  // pieza, metros, cosas de esas
+                'available_quantity' => ''
+            ]);
+        $response->assertStatus(302)
+            ->assertRedirect("/products/{$product->id}/edit/")
+            ->assertSessionHasErrors([
+                'title',
+                'description',
+                'code',
+                'sku',
+                'volume',
+                'weight',
+                'price',
+                'cost',
+                'condition',  // Terminado, matería prima, o ambas
+                'days_to_deliver',
+//            'category_id' => 'required',  // habrá categorias
+                'unit_of_measure',  // pieza, metros, cosas de esas
+            ]);
+        $this->assertEquals('titulo', Product::first()->title);
     }
 
     /** @test */
@@ -167,22 +256,16 @@ class ProductsTest extends TestCase
         });
     }
 
-    private function validParams($overrides = [])
+    /** @test */
+    function image_is_uploaded_if_included_when_update_product()
     {
-        return array_merge([
-            'title' => 'titulo',
-            'description' => 'Este es un gran producto.',
-            'code' => '12345678',
-            'sku' => '12345678',
-            'volume' => '0',
-            'weight' => '0',
-            'price' => '100',
-            'cost' => '90',
-            'condition' => 'new',  // Terminado, matería prima, o ambas
-            'days_to_deliver' => '2',
-//            'category_id' => '1',  // habrá categorias
-            'unit_of_measure' => 'new',  // pieza, metros, cosas de esas
-            'available_quantity' => 10
-        ], $overrides);
+        $product = create(Product::class, $this->validParams());
+        Storage::fake('local');
+        $response = $this->actingAs(createAdmin())
+            ->put('/products/' . $product->id, $this->validParams([
+                'image' => File::image('concert-poster.png'),
+            ]));
+        $this->assertNotNull(Product::first()->image);
+        Storage::disk('public')->assertExists(Product::first()->image);
     }
 }

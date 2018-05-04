@@ -39,4 +39,23 @@ abstract class TestCase extends BaseTestCase
             ]);
         return $response;
     }
+
+    protected function validParams($overrides = [])
+    {
+        return array_merge([
+            'title' => 'titulo',
+            'description' => 'Este es un gran producto.',
+            'code' => '12345678',
+            'sku' => '12345678',
+            'volume' => '0',
+            'weight' => '0',
+            'price' => '100',
+            'cost' => '90',
+            'condition' => 'new',  // Terminado, matería prima, o ambas
+            'days_to_deliver' => '2',
+//            'category_id' => '1',  // habrá categorias
+            'unit_of_measure' => 'piece',  // pieza, metros, cosas de esas
+            'available_quantity' => 10
+        ], $overrides);
+    }
 }

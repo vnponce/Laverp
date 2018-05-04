@@ -124,7 +124,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this->actingAs($admin)
-            ->put('/products/'.$product1->id, ['sku' => 1234]);
+            ->put('/products/'.$product1->id, $this->validParams(['sku' => 1234]));
         $response->assertStatus(302)
             ->assertRedirect('/products');
         $this->assertDatabaseHas('products', ['sku' => 1234]);

@@ -70,7 +70,27 @@ class ProductController extends Controller
         if(!auth()->user()->isAdmin()){
             return redirect('/products');
         }
+        $this->validate(request(),[
+            'title' => 'required',
+            'description' => 'required',
+            'image' => ['nullable', 'image'],
+            'code' => 'required',
+            'sku' => 'required',
+            'volume' => 'required',
+            'weight' => 'required',
+            'price' => 'required',
+            'cost' => 'required',
+            'condition' => 'required',  // Terminado, matería prima, o ambas
+            'days_to_deliver' => 'required',
+//            'category_id' => 'required',  // habrá categorias
+            'unit_of_measure' => 'required',  // pieza, metros, cosas de esas
+        ]);
+
+        $algo = request()->hasFile('image') ? request('image')->store('products', 'public') : null;
+//        dd($algo);
         $product->update(request()->all());
+        $product->image = $algo;
+        $product->save();
         return redirect('products');
     }
 
