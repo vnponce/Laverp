@@ -80,7 +80,6 @@ class ProductStoreTest extends TestCase
     /** @test */
     function admin_can_add_stock_to_existed_products_to_store()
     {
-        $admin = createAdmin();
         $store = create(Store::class, [
             'name' => 'Confeti'
         ]);
@@ -101,6 +100,33 @@ class ProductStoreTest extends TestCase
             'product_id' => $product->id,
             'store_id' => $store->id,
             'quantity' => 30,
+            'price' => $product->price,
+        ]);
+    }
+
+    /** @test */
+    function admin_can_reduce_stock_to_existed_products_to_store()
+    {
+        $store = create(Store::class, [
+            'name' => 'Confeti'
+        ]);
+        $product = create(Product::class,[
+            'title' => 'papas'
+        ]);
+
+        $this->addProductToStore($store, $product, 10);
+        $this->reduceProductToStore($store, $product, 2);
+
+        $this->assertDatabaseMissing('product_store', [
+            'product_id' => $product->id,
+            'store_id' => $store->id,
+            'quantity' => 10,
+            'price' => $product->price,
+        ]);
+        $this->assertDatabaseHas('product_store', [
+            'product_id' => $product->id,
+            'store_id' => $store->id,
+            'quantity' => 8,
             'price' => $product->price,
         ]);
     }

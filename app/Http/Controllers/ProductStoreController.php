@@ -35,7 +35,7 @@ class ProductStoreController extends Controller
             $quantity += $existing_quantity;
             $store->products()->updateExistingPivot(request()->get('product_id'),[
                 'quantity' => $quantity,
-                'price' => request()->get('price'),
+//                'price' => request()->get('price'),
             ]);
         } else {
             $store->products()->attach(request()->get('product_id'),[
@@ -43,5 +43,15 @@ class ProductStoreController extends Controller
                 'price' => request()->get('price'),
             ]);
         }
+    }
+
+    public function reduce(Store $store, Product $product)
+    {
+        $existing_quantity = $store->products->find($product->id)->pivot->quantity;
+        $quantity = $existing_quantity - request()->get('quantity');
+        $store->products()->updateExistingPivot($product->id,[
+            'quantity' => $quantity,
+//            'price' => request()->get('price'),
+        ]);
     }
 }

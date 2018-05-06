@@ -18,9 +18,9 @@ Route::get('/products', 'ProductController@index');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('products', 'ProductController', ['except' => ['index']]);
     Route::get('stores/{store}/products/add', 'ProductStoreController@add');
+    Route::post('stores/{store}/products/{product}/reduce', 'ProductStoreController@reduce');
     Route::get('stores/{store}/products', 'ProductStoreController@index');
     Route::post('stores/{store}/products', 'ProductStoreController@store');
-    Route::put('stores/{store}/products', 'ProductStoreController@update');
     Route::resource('stores', 'StoreController');
 });
 Auth::routes();
