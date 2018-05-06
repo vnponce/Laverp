@@ -127,7 +127,7 @@ class ProductsTest extends TestCase
                 'title',
                 'description',
                 'code',
-                'sku',
+//                'sku',
                 'volume',
                 'weight',
                 'price',
@@ -267,5 +267,19 @@ class ProductsTest extends TestCase
             ]));
         $this->assertNotNull(Product::first()->image);
         Storage::disk('public')->assertExists(Product::first()->image);
+    }
+
+    /** @test */
+    function it_can_increment_sku_attribute_by_one()
+    {
+//        $this->withoutExceptionHandling();
+        create(Product::class, [
+            'sku' => '0000'
+        ]);
+        $this->actingAs($this->admin)->post('/products', $this->validParams());
+        $this->assertEquals('0001', Product::orderBy('id', 'desc')->first()->sku);
+
+        $this->actingAs($this->admin)->post('/products', $this->validParams());
+        $this->assertEquals('0002', Product::orderBy('id', 'desc')->first()->sku);
     }
 }

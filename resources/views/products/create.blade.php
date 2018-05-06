@@ -21,7 +21,7 @@
                 {!! Field::text('description', ['name' => 'description','label' => 'Descripción', 'placeholder' => 'Descripción de producto'])  !!}
                 {!! Field::file('image', ['name' => 'image', 'label' => 'Imagen'])  !!}
                 {!! Field::text('code', ['name' => 'code', 'label' => 'Código', 'placeholder' => 'Código de producto'])  !!}
-                {!! Field::text('sku', ['name' => 'sku', 'label' => 'SKU', 'placeholder' => 'SKU de producto'])  !!}
+{{--                {!! Field::text('sku', ['name' => 'sku', 'label' => 'SKU', 'placeholder' => 'SKU de producto'])  !!}--}}
 {{--                {!! Field::text('volume', '0', ['name' => 'volume', 'label' => 'Volumen', 'placeholder' => 'Volume de producto en cm'])  !!}--}}
                 {!! Field::hidden('volume', '0')  !!}
                 {!! Field::hidden('weight', '0')  !!}

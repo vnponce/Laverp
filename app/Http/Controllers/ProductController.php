@@ -38,7 +38,7 @@ class ProductController extends Controller
             'description' => 'required',
             'image' => ['nullable', 'image'],
             'code' => 'required',
-            'sku' => 'required',
+//            'sku' => 'required',
             'volume' => 'required',
             'weight' => 'required',
             'price' => 'required',
@@ -49,7 +49,17 @@ class ProductController extends Controller
             'unit_of_measure' => 'required',  // pieza, metros, cosas de esas
         ]);
         $algo = request()->hasFile('image') ? request('image')->store('products', 'public') : null;
-
+        // Aca debo recordar poner el last igual de los que hayan sido eliminados.
+        // Imagina el caso que se elimina el sku 0009 y es el último, siendo el último vivo 0008.
+        // Debo dejar el 0009 o 0008 . Esto lo debo investigar
+        $suma = '0000';
+        if(Product::all()->count() > 0){
+            $sku = Product::orderBy('sku', 'desc')->first()->sku;
+            $suma = sprintf('%04d', $sku + 1);
+            request()->merge([
+                'sku' => $suma
+            ]);
+        }
         $product = Product::create(request()->all());
         $product->image = $algo;
         $product->save();
