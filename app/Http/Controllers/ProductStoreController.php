@@ -29,10 +29,19 @@ class ProductStoreController extends Controller
                     'quantity' => 'La cantidad disponible no es la suficiente.'
                 ]);
         }
-        $store->products()->attach(request()->get('product_id'),[
-            'quantity' => request()->get('quantity'),
-            'price' => request()->get('price'),
-        ]);
-
+        $quantity = request()->get('quantity');
+        if ($store->products->contains($product->id)) {
+            $existing_quantity = $store->products->find($product->id)->pivot->quantity;
+            $quantity += $existing_quantity;
+            $store->products()->updateExistingPivot(request()->get('product_id'),[
+                'quantity' => $quantity,
+                'price' => request()->get('price'),
+            ]);
+        } else {
+            $store->products()->attach(request()->get('product_id'),[
+                'quantity' => $quantity,
+                'price' => request()->get('price'),
+            ]);
+        }
     }
 }

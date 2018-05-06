@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('stores/{store}/products/add', 'ProductStoreController@add');
     Route::get('stores/{store}/products', 'ProductStoreController@index');
     Route::post('stores/{store}/products', 'ProductStoreController@store');
+    Route::put('stores/{store}/products', 'ProductStoreController@update');
     Route::resource('stores', 'StoreController');
 });
 Auth::routes();

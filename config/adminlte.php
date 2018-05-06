@@ -129,10 +129,10 @@ return [
                     'text'        => 'Agregar',
                     'url'         => '/products/create',
                 ],
-                [
-                    'text'        => 'Solicitados',
-                    'url'         => '/product/asked',
-                ],
+//                [
+//                    'text'        => 'Solicitados',
+//                    'url'         => '/product/asked',
+//                ],
             ]
         ],
         [
