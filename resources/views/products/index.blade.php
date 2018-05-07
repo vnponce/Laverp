@@ -98,7 +98,7 @@
     </table>
 
 
-    {{--Modal--}}
+    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- Fin modal -->
 @stop
 
 @section('js')

@@ -46,10 +46,25 @@ abstract class TestCase extends BaseTestCase
      * @param int $quantity
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
-    function reduceProductToStore($store, $product, $quantity = 1): \Illuminate\Foundation\Testing\TestResponse
+    function reduceStock($store, $product, $quantity = 1): \Illuminate\Foundation\Testing\TestResponse
     {
         $response = $this->actingAs(createAdmin())
             ->withoutExceptionHandling()->post("stores/{$store->id}/products/{$product->id}/reduce", [
+                'quantity' => $quantity,
+            ]);
+        return $response;
+    }
+
+    /**
+     * @param $store
+     * @param $product
+     * @param int $quantity
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
+    function addStock($store, $product, $quantity = 1): \Illuminate\Foundation\Testing\TestResponse
+    {
+        $response = $this->actingAs(createAdmin())
+            ->withoutExceptionHandling()->post("stores/{$store->id}/products/{$product->id}/add", [
                 'quantity' => $quantity,
             ]);
         return $response;

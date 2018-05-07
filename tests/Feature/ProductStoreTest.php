@@ -88,7 +88,7 @@ class ProductStoreTest extends TestCase
         ]);
 
         $this->addProductToStore($store, $product, 10);
-        $this->addProductToStore($store, $product, 20);
+        $this->addStock($store, $product, 20);
 
         $this->assertDatabaseMissing('product_store', [
             'product_id' => $product->id,
@@ -115,7 +115,7 @@ class ProductStoreTest extends TestCase
         ]);
 
         $this->addProductToStore($store, $product, 10);
-        $this->reduceProductToStore($store, $product, 2);
+        $this->reduceStock($store, $product, 2);
 
         $this->assertDatabaseMissing('product_store', [
             'product_id' => $product->id,
